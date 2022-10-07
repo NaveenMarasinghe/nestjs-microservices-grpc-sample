@@ -2,31 +2,30 @@ import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 
-export interface HeroById {
+export interface UserById {
   id: number;
 }
 
-export interface Hero {
+export interface User {
   id: number;
   name: string;
 }
 
-interface HeroesService {
-  findOne(data: HeroById): Observable<Hero>;
-  findMany(upstream: Observable<HeroById>): Observable<Hero>;
+interface UsersService {
+  findOne(data: { id: number }): Observable<any>;
 }
 
 @Injectable()
 export class AppService implements OnModuleInit {
-  private heroesService: HeroesService;
+  private usersService: UsersService;
 
-  constructor(@Inject('HERO_PACKAGE') private client: ClientGrpc) {}
+  constructor(@Inject('USER_PACKAGE') private client: ClientGrpc) {}
 
   onModuleInit() {
-    this.heroesService = this.client.getService<HeroesService>('HeroesService');
+    this.usersService = this.client.getService<UsersService>('UsersService');
   }
 
-  getHero(): Observable<string> {
-    return this.heroesService.findOne({ id: 1 });
+  getUser(): Observable<string> {
+    return this.usersService.findOne({ id: 1 });
   }
 }

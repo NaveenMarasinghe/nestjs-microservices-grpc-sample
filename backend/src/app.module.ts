@@ -8,11 +8,11 @@ import { AppService } from './app.service';
   imports: [
     ClientsModule.register([
       {
-        name: 'HERO_PACKAGE',
+        name: 'USER_PACKAGE',
         transport: Transport.GRPC,
         options: {
-          package: 'hero',
-          protoPath: join(__dirname, '//hero.proto'),
+          package: 'user',
+          protoPath: join(__dirname, './user.proto'),
         },
       },
     ]),
